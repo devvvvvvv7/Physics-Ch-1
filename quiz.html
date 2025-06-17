@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Reflection and Refraction</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .quiz-container { background: linear-gradient(to right, #D1FAE5, #A7F3D0); transition: background 2s ease; }
+        .option { transition: background-color 0.5s ease, transform 0.2s ease; }
+        .option:hover { transform: scale(1.02); }
+        .correct { animation: correctAnim 0.5s ease; }
+        .wrong { animation: wrongAnim 0.5s ease; }
+        .explanation { background: #F3F4F6; padding: 1rem; border-radius: 8px; transition: background 2s ease; }
+        .header-bg { transition: background 2s ease; }
+        .nav-link { transition: background-color 0.5s ease, color 0.5s ease; }
+        .dynamic-btn { transition: background-color 0.5s ease; }
+        .selected { background-color: #3B82F6 !important; color: white !important; } /* Blue highlight for selected option */
+        @keyframes correctAnim { 0% { background-color: #10B981; } 100% { background-color: #F3F4F6; } }
+        @keyframes wrongAnim { 0% { background-color: #EF4444; } 100% { background-color: #F3F4F6; } }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <header id="header" class="header-bg text-white text-center py-8">
+        <h1 class="text-4xl font-bold">Quiz: Reflection and Refraction</h1>
+        <p class="mt-2 text-xl">Test Your Physics Knowledge with 50 Questions!</p>
+    </header>
+    <nav class="bg-gray-800 text-white flex justify-center space-x-4 py-4 sticky top-0 z-10">
+        <a href="index.html" class="nav-link px-4 py-2 rounded">Back to Lessons</a>
+    </nav>
+    <main class="max-w-4xl mx-auto p-6">
+        <section id="quizSection" class="quiz-container p-6 rounded-lg shadow-lg">
+            <h3 class="text-3xl font-semibold text-green-600 mb-4"> Quiz: Set <span id="setNumber">1</span>/5</h3>
+            <p class="text-lg mb-6">Answer 50 questions in 5 sets of 10, with detailed explanations to learn from each answer!</p>
+            <div class="flex justify-between mb-4">
+                <button id="prevBtn" class="dynamic-btn bg-gray-600 text-white px-4 py-2 rounded disabled:opacity-50" disabled>Previous</button>
+                <span class="text-xl font-bold">Question <span id="questionNumber">1</span>/50</span>
+                <button id="nextBtn" class="dynamic-btn bg-gray-600 text-white px-4 py-2 rounded">Next</button>
+            </div>
+            <p id="quizQuestion" class="text-lg font-medium mb-4"></p>
+            <div id="options" class="grid grid-cols-1 gap-3"></div>
+            <button id="submitBtn" class="dynamic-btn mt-4 bg-blue-600 text-white px-6 py-3 rounded disabled:opacity-50" disabled>Submit Answer</button>
+            <p id="result" class="mt-4 text-lg font-medium text-center"></p>
+            <div id="explanation" class="mt-4 hidden"></div>
+            <p id="score" class="mt-6 text-xl font-bold text-center">Score: <span id="scoreValue">0</span>/50</p>
+            <div id="resultsSummary" class="mt-6 hidden">
+                <h4 class="text-2xl font-semibold text-green-600 mb-4">Quiz Completed!</h4>
+                <p id="finalScore" class="text-lg mb-4"></p>
+                <button id="restartQuiz" class="dynamic-btn bg-green-600 text-white px-6 py-3 rounded">Restart Quiz</button>
+            </div>
+        </section>
+    </main>
+    <script>
+        const colors = ['#16A34A', '#2563EB', '#7C3AED', '#DB2777'];
+        let colorIndex = 0;
+
+        function updateDynamicColors() {
+            const header = document.getElementById('header');
+            const quizSection = document.getElementById('quizSection');
+            const explanation = document.getElementById('explanation');
+            const buttons = document.getElementsByClassName('dynamic-btn');
+            const navLink = document.getElementsByClassName('nav-link')[0];
+            const options = document.getElementsByClassName('option');
+
+            const currentColor = colors[colorIndex];
+            const nextColor = colors[(colorIndex + 1) % colors.length];
+            header.style.background = `linear-gradient(to right, ${currentColor}, ${nextColor})`;
+            quizSection.style.background = `linear-gradient(to right, ${currentColor}40, ${nextColor}40)`;
+            if (!explanation.classList.contains('hidden')) {
+                explanation.style.background = `${currentColor}20`;
+            }
+
+            for (let button of buttons) {
+                button.style.backgroundColor = currentColor;
+                button.onmouseover = () => button.style.backgroundColor = nextColor;
+                button.onmouseout = () => button.style.backgroundColor = currentColor;
+            }
+
+            navLink.onmouseover = () => {
+                navLink.style.backgroundColor = nextColor;
+                navLink.style.color = '#FFFFFF';
+            };
+            navLink.onmouseout = () => {
+                navLink.style.backgroundColor = '';
+                navLink.style.color = '#FFFFFF';
+            };
+
+            for (let option of options) {
+                option.onmouseover = () => {
+                    if (!option.classList.contains('selected')) {
+                        option.style.backgroundColor = `${nextColor}20`;
+                    }
+                };
+                option.onmouseout = () => {
+                    if (!option.classList.contains('selected')) {
+                        option.style.backgroundColor = '#FFFFFF';
+                    }
+                };
+            }
+
+            colorIndex = (colorIndex + 1) % colors.length;
+            setTimeout(updateDynamicColors, 3000);
+        }
+        updateDynamicColors();
+
+        const questions = [
+            { question: "What is the angle of reflection if the angle of incidence is 30°?", options: ["30°", "60°", "90°", "45°"], answer: "30°", explanation: "According to the Law of Reflection, the angle of incidence equals the angle of reflection. If the incident ray strikes the mirror at 30° to the normal, the reflected ray also makes a 30° angle with the normal. This ensures the total angle between the incident and reflected rays is 60° (30° + 30°)." },
+            { question: "Which mirror forms a virtual, upright, and same-sized image?", options: ["Concave", "Convex", "Plane", "Spherical"], answer: "Plane", explanation: "Plane mirrors always produce virtual images (behind the mirror, not projectable), upright (same orientation as the object), and the same size as the object. The image is formed at the same distance behind the mirror as the object is in front, with left-right reversal (lateral inversion)." },
+            { question: "What happens to light when it enters a denser medium?", options: ["Speeds up", "Slows down", "Stops", "No change"], answer: "Slows down", explanation: "When light enters a denser medium (e.g., from air to water), its speed decreases due to the higher refractive index of the denser medium. The refractive index (n) is defined as n = c/v, where c is the speed of light in a vacuum and v is the speed in the medium. For water, n ≈ 1.33, so v is lower than in air (n ≈ 1)." },
+            { question: "Which law governs light bending during refraction?", options: ["Newton’s Law", "Snell’s Law", "Ohm’s Law", "Kepler’s Law"], answer: "Snell’s Law", explanation: "Snell’s Law describes refraction, stating that n₁ sin(θ₁) = n₂ sin(θ₂), where n₁ and n₂ are the refractive indices of the two mediums, and θ₁ and θ₂ are the angles of incidence and refraction, respectively. This law quantifies how light bends when moving between mediums of different densities." },
+            { question: "Where are convex mirrors commonly used?", options: ["Telescopes", "Car headlights", "Side mirrors of cars", "Microscopes"], answer: "Side mirrors of cars", explanation: "Convex mirrors form virtual, upright, and diminished images, providing a wide field of view. This makes them ideal for car side mirrors, allowing drivers to see a larger area behind and beside the vehicle, reducing blind spots, though objects appear smaller." },
+            { question: "What is a convex lens also called?", options: ["Diverging lens", "Converging lens", "Plane lens", "Cylindrical lens"], answer: "Converging lens", explanation: "A convex lens is thicker at the center and bends light rays inward to converge at a focal point. This converging behavior makes it useful in devices like magnifying glasses and cameras, where it can form real or virtual images depending on object placement." },
+            { question: "What is the approximate refractive index of air?", options: ["1", "1.33", "0", "2"], answer: "1", explanation: "The refractive index of air is approximately 1, as light travels in air at nearly the same speed as in a vacuum. The refractive index is defined as n = c/v, where c is the speed of light in a vacuum and v is the speed in the medium. For air, v is very close to c, so n ≈ 1." },
+            { question: "When does total internal reflection occur?", options: ["Rarer to denser medium", "Denser to rarer medium", "Air to glass only", "Water to air only"], answer: "Denser to rarer medium", explanation: "Total internal reflection occurs when light travels from a denser medium (higher n, e.g., water, n=1.33) to a rarer medium (lower n, e.g., air, n=1) at an angle of incidence greater than the critical angle. The critical angle is where the refracted angle is 90°, calculated as sin(θ_c) = n₂/n₁." },
+            { question: "Where is the image formed in a concave mirror when the object is at the focus?", options: ["At focus", "At infinity", "Behind mirror", "At center of curvature"], answer: "At infinity", explanation: "When an object is placed at the focus (F) of a concave mirror, parallel rays from the object, after reflection, form a beam parallel to the principal axis, not converging. This results in an image formed at infinity, which is real and highly magnified, as seen in applications like searchlights." },
+            { question: "Which lens corrects nearsightedness?", options: ["Convex lens", "Concave lens", "Plane lens", "Bifocal lens"], answer: "Concave lens", explanation: "Nearsightedness (myopia) occurs when distant objects focus in front of the retina. Concave lenses, which are diverging lenses, spread light out before it enters the eye, shifting the focus back to the retina, allowing clear vision of distant objects." },
+            { question: "What is the angle between the incident ray and the normal called?", options: ["Angle of reflection", "Angle of incidence", "Angle of refraction", "Critical angle"], answer: "Angle of incidence", explanation: "The angle of incidence is the angle between the incident ray (the incoming light ray) and the normal (a line perpendicular to the surface at the point of incidence). It is a key parameter in the laws of reflection and refraction." },
+            { question: "Plane mirrors are used in:", options: ["Periscopes", "Car headlights", "Projectors", "Cameras"], answer: "Periscopes", explanation: "Plane mirrors are used in periscopes to reflect light and allow viewing around obstacles, such as in submarines. Two plane mirrors at 45° angles redirect light, forming an upright image with lateral inversion, ideal for such applications." },
+            { question: "The focal length of a plane mirror is:", options: ["Zero", "Infinite", "Negative", "Positive"], answer: "Infinite", explanation: "A plane mirror does not converge or diverge light rays; reflected rays appear to come from behind the mirror without meeting. Since there’s no focal point, the focal length is considered infinite, unlike curved mirrors with defined foci." },
+            { question: "Concave mirrors are used in:", options: ["Side mirrors of cars", "Makeup mirrors", "Security mirrors", "Rearview mirrors"], answer: "Makeup mirrors", explanation: "Concave mirrors produce magnified, virtual images when the object is between the focus and the mirror, making them ideal for makeup or shaving mirrors. They allow users to see enlarged details of their face for precision tasks." },
+            { question: "The image formed by a convex mirror is always:", options: ["Real and inverted", "Virtual and upright", "Real and upright", "Virtual and inverted"], answer: "Virtual and upright", explanation: "Convex mirrors diverge light rays, which appear to come from a focal point behind the mirror. This results in a virtual image (behind the mirror), upright (same orientation), and diminished (smaller), regardless of object position." },
+            { question: "What is the refractive index of water approximately?", options: ["1", "1.33", "1.5", "2"], answer: "1.33", explanation: "The refractive index of water is approximately 1.33, meaning light travels 1.33 times slower in water than in a vacuum. This value is used in Snell’s Law calculations to determine how light bends when entering or leaving water." },
+            { question: "Snell’s Law relates:", options: ["Speed and wavelength", "Angles and refractive indices", "Frequency and intensity", "Mass and energy"], answer: "Angles and refractive indices", explanation: "Snell’s Law, n₁ sin(θ₁) = n₂ sin(θ₂), relates the angles of incidence (θ₁) and refraction (θ₂) to the refractive indices (n₁, n₂) of the two mediums. It quantifies the bending of light during refraction." },
+            { question: "The image formed by a concave lens is always:", options: ["Real and inverted", "Virtual and upright", "Real and upright", "Virtual and inverted"], answer: "Virtual and upright", explanation: "Concave lenses diverge light rays, which appear to come from a point in front of the lens (on the same side as the object). This produces a virtual, upright, and diminished image, regardless of where the object is placed." },
+            { question: "Optical fibers work based on:", options: ["Reflection", "Refraction", "Total internal reflection", "Diffraction"], answer: "Total internal reflection", explanation: "Optical fibers transmit light signals using total internal reflection. Light traveling through the dense glass core (n ≈ 1.5) reflects off the less dense cladding (n lower) at angles greater than the critical angle, allowing data to travel long distances with minimal loss." },
+            { question: "The center of curvature of a mirror is:", options: ["At the pole", "Twice the focal length", "At the pole", "Infinite"], answer: "Twice the focal length", explanation: "The center of curvature (C) of a spherical mirror is the center of the sphere it forms a part of. It is located at twice the focal length (C = 2F) from the mirror’s pole, as the focus (F) is halfway between the pole and C." },
+            { question: "If the angle of incidence is 0°, the angle of reflection is:", options: ["0°", "90°", "45°", "180°"], answer: "0°", explanation: "When the angle of incidence is 0° (the ray is perpendicular to the surface), the incident ray strikes along the normal. By the law of reflection, the angle of reflection is also 0°, so the ray reflects straight back along the same path." },
+            { question: "A real image can be formed by:", options: ["Plane mirror", "Convex mirror", "Concave mirror", "Convex lens"], answer: "Concave mirror", explanation: "Real images are formed where light rays actually converge and can be projected on a screen. Concave mirrors form real, inverted images when the object is placed beyond the focus (e.g., beyond F), unlike plane or convex mirrors, which only form virtual images." },
+            { question: "The critical angle depends on:", options: ["Wavelength of light", "Refractive indices of mediums", "Intensity of light", "Angle of incidence"], answer: "Refractive indices of mediums", explanation: "The critical angle (θ_c) for total internal reflection is determined by the refractive indices of the two mediums, given by sin(θ_c) = n₂/n₁, where n₁ is the denser medium and n₂ is the rarer medium. It’s independent of light intensity or angle of incidence." },
+            { question: "A convex lens forms a real image when the object is:", options: ["At focus", "Between focus and lens", "Beyond focus", "At infinity"], answer: "Beyond focus", explanation: "A convex lens forms a real, inverted image when the object is placed beyond the focal point (F). The rays converge after passing through the lens to form an image on the opposite side, used in devices like projectors and cameras." },
+            { question: "The image in a plane mirror is laterally inverted, meaning:", options: ["Upside down", "Left-right reversed", "Smaller", "Larger"], answer: "Left-right reversed", explanation: "Lateral inversion in a plane mirror means the left side of the object appears as the right side of the image (e.g., your right hand looks like the left hand in the mirror). The image remains upright and the same size, not upside down or resized." },
+            { question: "Which mirror has a negative focal length?", options: ["Plane", "Concave", "Convex", "None"], answer: "Convex", explanation: "In the sign convention for mirrors, the focal length of a convex mirror is negative because its focus lies behind the mirror (virtual focus). Concave mirrors have a positive focal length, and plane mirrors have an infinite focal length." },
+            { question: "Refraction causes a pencil in water to appear:", options: ["Straight", "Bent", "Shorter", "Longer"], answer: "Bent", explanation: "When a pencil is partially submerged in water, light from the underwater part bends as it enters air (due to refraction, n_water = 1.33 to n_air = 1). This makes the pencil appear bent at the water’s surface, as the light paths shift according to Snell’s Law." },
+            { question: "The focus of a convex lens is:", options: ["Virtual", "Real", "Infinite", "Negative"], answer: "Real", explanation: "A convex lens converges parallel light rays to a point called the focus, located on the opposite side of the lens. This real focus is where rays actually meet, making it positive in the lens sign convention, unlike the virtual focus of a concave lens." },
+            { question: "The mirror formula is:", options: ["1/f = 1/u + 1/v", "f = u + v", "1/f = u + v", "f = 1/u + 1/v"], answer: "1/f = 1/u + 1/v", explanation: "The mirror formula, 1/f = 1/u + 1/v, relates the focal length (f), object distance (u), and image distance (v) for spherical mirrors. It’s used to calculate image positions and sizes, with sign conventions applied (e.g., f is positive for concave, negative for convex)." },
+            { question: "A virtual image can be formed by:", options: ["Concave mirror only", "Convex mirror", "Plane mirror", "Both b and c"], answer: "Both b and c", explanation: "Virtual images, which cannot be projected, are formed by convex mirrors (always virtual, upright, diminished) and plane mirrors (virtual, upright, same size). Concave mirrors can also form virtual images when the object is between the focus and pole, but not exclusively." },
+            { question: "The speed of light is highest in:", options: ["Water", "Glass", "Vacuum", "Diamond"], answer: "Vacuum", explanation: "Light travels fastest in a vacuum, where its speed is c ≈ 3 × 10⁸ m/s, with a refractive index of 1. In mediums like water (n ≈ 1.33), glass (n ≈ 1.5), or diamond (n ≈ 2.42), light slows down, as n = c/v." },
+            { question: "The image formed by a concave mirror when the object is between focus and pole is:", options: ["Real and inverted", "Virtual and upright", "Real and upright", "Virtual and inverted"], answer: "Virtual and upright", explanation: "When an object is placed between the focus (F) and pole of a concave mirror, reflected rays diverge but appear to converge behind the mirror, forming a virtual, upright, and magnified image, as seen in makeup mirrors." },
+            { question: "Which lens is used in a projector?", options: ["Concave", "Convex", "Plane", "Cylindrical"], answer: "Convex", explanation: "Projectors use convex lenses to form real, inverted, and magnified images of a slide or screen on a distant surface. The object (slide) is placed just beyond the focal point, allowing the lens to project a clear, enlarged image." },
+            { question: "The angle of refraction is 90° when the angle of incidence is:", options: ["0°", "Critical angle", "45°", "90°"], answer: "Critical angle", explanation: "The critical angle is the angle of incidence at which the angle of refraction is 90° (light grazes the boundary). Beyond this angle, total internal reflection occurs. It’s calculated as sin(θ_c) = n₂/n₁, where n₂ is the rarer medium." },
+            { question: "The power of a lens is measured in:", options: ["Watts", "Meters", "Diopters", "Joules"], answer: "Diopters", explanation: "The power of a lens is defined as P = 1/f, where f is the focal length in meters, and is measured in diopters (D). A lens with a focal length of 1 m has a power of 1 D. Convex lenses have positive power, concave lenses have negative power." },
+            { question: "A concave mirror forms a real image when the object is:", options: ["At focus", "Beyond center of curvature", "Between focus and pole", "At pole"], answer: "Beyond center of curvature", explanation: "When an object is beyond the center of curvature (C) of a concave mirror, reflected rays converge between F and C to form a real, inverted, and diminished image. This is used in applications like telescopes." },
+            { question: "The refractive index of glass is approximately:", options: ["1", "1.33", "1.5", "2"], answer: "1.5", explanation: "The refractive index of glass is typically around 1.5, meaning light travels 1.5 times slower in glass than in a vacuum. This value varies slightly with glass type but is commonly used in calculations for lenses and prisms." },
+            { question: "A diverging lens is:", options: ["Convex", "Concave", "Plane", "Bifocal"], answer: "Concave", explanation: "A concave lens is thinner at the center and diverges light rays, making them appear to come from a virtual focus on the same side as the object. This diverging property is used to correct vision issues like nearsightedness." },
+            { question: "The image distance in a plane mirror is:", options: ["Equal to object distance", "Half the object distance", "Double the object distance", "Infinite"], answer: "Equal to object distance", explanation: "In a plane mirror, the image is formed as far behind the mirror as the object is in front. This equal distance results from the law of reflection, where reflected rays appear to diverge from a point directly behind the mirror." },
+            { question: "Total internal reflection is used in:", options: ["Mirrors", "Lenses", "Optical fibers", "Cameras"], answer: "Optical fibers", explanation: "Optical fibers rely on total internal reflection to transmit light signals. Light in the glass core reflects repeatedly off the cladding at angles greater than the critical angle, allowing efficient data transfer over long distances." },
+            { question: "The focal length of a convex mirror is:", options: ["Positive", "Negative", "Zero", "Infinite"], answer: "Negative", explanation: "In the sign convention, the focal length of a convex mirror is negative because its focus is virtual (behind the mirror). This reflects the diverging nature of the mirror, unlike concave mirrors with a positive focal length." },
+            { question: "A convex lens forms a virtual image when the object is:", options: ["Beyond focus", "At focus", "Between focus and lens", "At infinity"], answer: "Between focus and lens", explanation: "When an object is placed between the focal point and a convex lens, the lens diverges the rays, which appear to converge behind the lens (same side as object), forming a virtual, upright, and magnified image, as in a magnifying glass." },
+            { question: "The normal is a line:", options: ["Parallel to the surface", "Perpendicular to the surface", "Along the incident ray", "Along the reflected ray"], answer: "Perpendicular to the surface", explanation: "The normal is an imaginary line perpendicular to the surface at the point where the incident ray strikes. It serves as the reference for measuring angles of incidence and reflection or refraction." },
+            { question: "Which mirror is used in car headlights?", options: ["Plane", "Convex", "Concave", "Cylindrical"], answer: "Concave", explanation: "Concave mirrors are used in car headlights to focus light from a bulb placed at the focus into a parallel beam, illuminating the road ahead. The converging property of concave mirrors ensures a strong, directed light output." },
+            { question: "The lens formula is similar to:", options: ["Mirror formula", "Snell’s Law", "Ohm’s Law", "Newton’s Law"], answer: "Mirror formula", explanation: "The lens formula, 1/f = 1/u + 1/v, is similar to the mirror formula, relating focal length (f), object distance (u), and image distance (v). Both use sign conventions to account for real/virtual images and converging/diverging behavior." },
+            { question: "The image formed by a convex lens at infinity is:", options: ["Virtual and upright", "Real and inverted", "Virtual and inverted", "Real and upright"], answer: "Real and inverted", explanation: "When an object is at infinity, parallel rays enter a convex lens and converge at the focal point on the opposite side, forming a real, inverted, and highly diminished image, as seen in telescopes or cameras." },
+            { question: "The angle of incidence for total internal reflection must be:", options: ["Less than critical angle", "Equal to critical angle", "Greater than critical angle", "Zero"], answer: "Greater than critical angle", explanation: "For total internal reflection, the angle of incidence in the denser medium must exceed the critical angle (θ_c), where sin(θ_c) = n₂/n₁. At this angle, light reflects entirely back into the denser medium instead of refracting." },
+            { question: "A plane mirror forms an image that is:", options: ["Real", "Virtual", "Inverted", "Diminished"], answer: "Virtual", explanation: "Plane mirrors form virtual images because the reflected rays diverge and only appear to meet behind the mirror when extended backward. The image is upright, same-sized, and laterally inverted, not projectable on a screen." },
+            { question: "Which lens is used to correct farsightedness?", options: ["Concave", "Convex", "Plane", "Cylindrical"], answer: "Convex", explanation: "Farsightedness (hyperopia) occurs when nearby objects focus behind the retina. Convex lenses converge light before it enters the eye, bringing the focus forward to the retina, enabling clear vision of close objects." },
+            { question: "The phenomenon of a rainbow is due to:", options: ["Reflection", "Refraction", "Dispersion", "All of the above"], answer: "All of the above", explanation: "A rainbow forms due to refraction (light bending as it enters a raindrop), dispersion (splitting into colors due to wavelength-dependent refractive indices), reflection (inside the drop), and refraction again (as light exits), creating a spectrum of colors." }
+        ];
+
+        let currentQuestion = 0, score = 0, answers = new Array(50).fill(null);
+        const questionsPerSet = 10;
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('setNumber').textContent = Math.floor(currentQuestion / questionsPerSet) + 1;
+            document.getElementById('questionNumber').textContent = currentQuestion + 1;
+            document.getElementById('quizQuestion').textContent = q.question;
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            q.options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option bg-white p-4 rounded-lg shadow text-left w-full';
+                button.textContent = option;
+                button.onclick = () => selectOption(button, option);
+                if (answers[currentQuestion] === option) button.classList.add('selected');
+                optionsDiv.appendChild(button);
+            });
+            document.getElementById('result').textContent = '';
+            document.getElementById('explanation').classList.add('hidden');
+            document.getElementById('submitBtn').disabled = !answers[currentQuestion];
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            document.getElementById('nextBtn').disabled = answers[currentQuestion] === null;
+            document.getElementById('scoreValue').textContent = score;
+        }
+
+        function selectOption(button, option) {
+            const buttons = document.getElementsByClassName('option');
+            for (let btn of buttons) btn.classList.remove('selected');
+            button.classList.add('selected');
+            button.dataset.selected = option;
+            document.getElementById('submitBtn').disabled = false;
+        }
+
+        document.getElementById('submitBtn').onclick = () => {
+            const selectedButton = Array.from(document.getElementsByClassName('option')).find(btn => btn.dataset.selected);
+            if (!selectedButton) return;
+            const selected = selectedButton.dataset.selected;
+            answers[currentQuestion] = selected;
+            const q = questions[currentQuestion];
+            const result = document.getElementById('result');
+            const explanationDiv = document.getElementById('explanation');
+            if (selected === q.answer) {
+                result.textContent = "Correct! Great Job!";
+                result.className = 'mt-4 text-lg font-medium text-green-600';
+                selectedButton.classList.add('correct');
+                if (answers[currentQuestion] !== q.answer) score++;
+            } else {
+                result.textContent = `Wrong! Correct Answer: ${q.answer}`;
+                result.className = 'mt-4 text-lg font-medium text-red-600';
+                selectedButton.classList.add('wrong');
+                if (answers[currentQuestion] === q.answer) score--;
+            }
+            explanationDiv.innerHTML = `<p class="text-base"><strong>Explanation:</strong> ${q.explanation}</p>`;
+            explanationDiv.classList.remove('hidden');
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('nextBtn').disabled = false;
+            document.getElementById('submitBtn').disabled = true;
+        };
+
+        document.getElementById('prevBtn').onclick = () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        };
+
+        document.getElementById('nextBtn').onclick = () => {
+            currentQuestion++;
+            if (currentQuestion >= questions.length) {
+                showResults();
+            } else {
+                loadQuestion();
+            }
+        };
+
+        function showResults() {
+            document.getElementById('quizQuestion').textContent = '';
+            document.getElementById('options').innerHTML = '';
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('prevBtn').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('result').textContent = '';
+            document.getElementById('explanation').classList.add('hidden');
+            document.getElementById('resultsSummary').classList.remove('hidden');
+            document.getElementById('finalScore').textContent = `Your Final Score: ${score}/50. ${score >= 40 ? 'Outstanding!' : score >= 30 ? 'Well Done!' : 'Keep Practicing!'}`;
+        }
+
+        document.getElementById('restartQuiz').onclick = () => {
+            currentQuestion = 0;
+            score = 0;
+            answers.fill(null);
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('resultsSummary').classList.add('hidden');
+            document.getElementById('submitBtn').style.display = 'block';
+            document.getElementById('prevBtn').style.display = 'block';
+            document.getElementById('nextBtn').style.display = 'block';
+            loadQuestion();
+        };
+
+        loadQuestion();
+    </script>
+</body>
+</html>
