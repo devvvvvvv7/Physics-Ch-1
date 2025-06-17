@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reflection and Refraction - Class 10 Physics</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+            color: #1a202c;
+        }
+        canvas {
+            border: 3px solid #4a90e2;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        canvas:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+        .section-bg {
+            background: linear-gradient(145deg, #ffffff, #e6f0fa);
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        .section-bg.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .header-bg {
+            background: linear-gradient(90deg, #4a90e2, #50e3c2);
+            transition: background 3s ease;
+        }
+        .nav-link {
+            transition: background-color 0.5s ease, transform 0.3s ease;
+        }
+        .nav-link:hover {
+            transform: scale(1.1);
+            background-color: #50e3c2;
+        }
+        h2, h3, h4 {
+            color: #2b6cb0;
+        }
+        .highlight-box {
+            background: #edf2f7;
+            padding: 1rem;
+            border-left: 4px solid #4a90e2;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+        .did-you-know {
+            background: #fefcbf;
+            padding: 1rem;
+            border-left: 4px solid #f6e05e;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header id="header" class="header-bg text-white text-center py-12">
+        <h1 class="text-5xl font-bold mb-2">Reflection and Refraction - Class 10 Physics</h1>
+        <p class="text-xl">Discover the Magic of Light with Interactive Diagrams!</p>
+    </header>
+    <nav class="bg-gray-800 text-white flex justify-center space-x-6 py-4 sticky top-0 z-10">
+        <a href="#reflection" class="nav-link px-6 py-3 rounded-lg text-lg font-medium">Reflection</a>
+        <a href="#refraction" class="nav-link px-6 py-3 rounded-lg text-lg font-medium">Refraction</a>
+        <a href="quiz.html" class="nav-link px-6 py-3 rounded-lg text-lg font-medium">Quiz</a>
+    </nav>
+    <main class="max-w-6xl mx-auto p-8">
+        <section id="reflection" class="section-bg p-8 mb-12">
+            <h2 class="text-4xl font-bold mb-6">Reflection of Light</h2>
+            <p class="text-lg mb-6">Reflection occurs when light bounces off a surface, obeying the laws of reflection. Let’s explore how mirrors reflect light and form images!</p>
+            <div class="highlight-box">
+                <h4 class="text-xl font-semibold mb-2">Laws of Reflection</h4>
+                <ul class="list-disc ml-6">
+                    <li>The angle of incidence (i) equals the angle of reflection (r).</li>
+                    <li>The incident ray, reflected ray, and normal (perpendicular to the surface) lie in the same plane.</li>
+                </ul>
+            </div>
+            <h3 class="text-2xl font-semibold mb-4">Plane Mirrors</h3>
+            <p class="text-lg mb-4">Plane mirrors are flat surfaces that create virtual, upright, and same-sized images. The image appears as far behind the mirror as the object is in front, but it’s laterally inverted (left and right swapped).</p>
+            <div class="highlight-box">
+                <h4 class="text-xl font-semibold mb-2">Real-Life Example</h4>
+                <p>Look into a bathroom mirror—you see your reflection! It looks exactly like you but reversed. That’s why your right hand appears as the left hand in the mirror.</p>
+            </div>
+            <div class="highlight-box">
+                <h4 class="text-xl font-semibold mb-2">Uses of Plane Mirrors</h4>
+                <ul class="list-disc ml-6">
+                    <li>Dressing mirrors for checking your appearance.</li>
+                    <li>Periscopes in submarines to see above water.</li>
+                    <li>Kaleidoscopes for creating beautiful patterns.</li>
+                </ul>
+            </div>
+            <div class="canvas-container text-center">
+                <canvas id="planeMirrorCanvas" width="600" height="400" class="mx-auto mb-4"></canvas>
+                <p class="text-center text-gray-600 italic">Move your mouse left of the mirror to place the object and see its reflection!</p>
+            </div>
+            <div class="did-you-know">
+                <h4 class="text-xl font-semibold mb-2">Did You Know?</h4>
+                <p>The word "AMBULANCE" on emergency vehicles is written in reverse so that drivers see it correctly in their rearview mirrors!</p>
+            </div>
+            <h3 class="text-2xl font-semibold mb-4">Concave Mirrors</h3>
+            <p class="text-lg mb-4">Concave mirrors curve inward, like the inside of a spoon. They can form real or virtual images depending on where the object is placed relative to the focus (F) and center of curvature (C).</p>
+            <div class="highlight-box">
+                <h4 class="text-xl font-semibold mb-2">Key Points</h4>
+                <ul class="list-disc ml-6">
+                    <li>Focus (F): Where parallel rays converge, at half the distance to C.</li>
+                    <li>Center of Curvature (C): Center of the sphere the mirror is part of, at 2F.</li>
+                    <li>Mirror Formula: \( \frac{1}{v} + \frac{1}{u} = \frac{1}{f} \), where \( u \) is object distance, \( v \) is image distance, and \( f \) is focal length.</li>
+                    <li>Magnification: \( m = -\frac{v}{u} \), determines the size of the image.</li>
+                </ul>
+            </div>
+            <div class="highlight-box">
+                <h4 class="text-xl font-semibold mb-2">Image Formation</h4>
+                <ul class="list-disc ml-6">
+                    <li>Beyond C: Real, inverted, smaller.</li>
+                    <li>At C: Real, inverted, same size.</li>
+                    <li>Between C and F: Real, inverted, larger.</li>
+                    <li>At F: Image at infinity.</li>
+                    <li>Between F and mirror: Virtual, upright, larger.</li>
+                </ul>
+            </div>
+            <div class="highlight-box">
+                <h4 class="text-xl font-semibold mb-2">Uses of Concave Mirrors</h4>
+                <ul class="list-disc ml-6">
+                    <li>Makeup or shaving mirrors (virtual, magnified image when object is between F and mirror).</li>
+                    <li>Car headlights (light source at F, creates a parallel beam).</li>
+                    <li>Reflecting telescopes to focus starlight.</li>
+                </ul>
+            </div>
+            <div class="canvas-container text-center">
+                <canvas id="concaveMirrorCanvas" width="600" height="400" class="mx-auto mb-4"></canvas>
+                <p class="text-center text-gray-600 italic">Move your mouse left of the mirror to place the object and see its image!</p>
+            </div>
+            <h3 class="text-2xl font-semibold mb-4">Convex Mirrors</h3>
+            <p class="text-lg mb-4">Convex mirrors curve outward, like the back of a spoon. They always form virtual, upright, and smaller images, regardless of the object’s position.</p>
+            <div class="highlight-box">
+                <h4 class="text-xl font-semibold mb-2">Key Points</h4>
+                <ul class="list-disc ml-6">
+                    <li>Focus (F): Behind the mirror, where rays appear to diverge from.</li>
+                    <li>Always virtual, upright, and diminished images.</li>
+                </ul>
+            </div>
+            <div class="highlight-box">
+                <h4 class="text-xl font-semibold mb-2">Uses of Convex Mirrors</h4>
+                <ul class="list-disc ml-6">
+                    <li>Side mirrors in cars (wide field of view, “objects are closer than they appear”).</li>
+                    <li>Security mirrors in stores to monitor large areas.</li>
+                    <li>Traffic mirrors at road intersections to avoid collisions.</li>
+                </ul>
+            </div>
+            <div class="canvas-container text-center">
+                <canvas id="convexMirrorCanvas" width="600" height="400" class="mx-auto mb-4"></canvas>
+                <p class="text-center text-gray-600 italic">Move your mouse left of the mirror to place the object and see its virtual image!</p>
+            </div>
+        </section>
+        <section id="refraction" class="section-bg p-8 mb-12">
+            <h2 class="text-4xl font-bold mb-6">Refraction of Light</h2>
+            <p class="text-lg mb-6">Refraction is the bending of light as it passes from one medium to another (e.g., air to water) due to a change in its speed. This makes objects appear bent or shifted!</p>
+            <div class="highlight-box">
+                <h4 class="text-xl font-semibold mb-2">Key Concepts</h4>
+                <ul class="list-disc ml-6">
+                    <li>Refractive Index (n): Measures how much light slows down, \( n = \frac{c}{v} \), where \( c \) is speed in vacuum, \( v \) is speed in the medium. Air: ~1, Water: ~1.33, Glass: ~1.5.</li>
+                    <li>Snell’s Law: \( n_1 \sin(\theta_1) = n_2 \sin(\theta_2) \), relates angles of incidence and refraction.</li>
+                    <li>Total Internal Reflection (TIR): When light travels from a denser to a rarer medium (e.g., water to air) at an angle greater than the critical angle, it reflects back. Critical angle for water-air: ~48.6°.</li>
+                </ul>
+            </div>
+            <div class="highlight-box">
+                <h4 class="text-xl font-semibold mb-2">Real-Life Example</h4>
+                <p>Place a pencil in a glass of water—it looks bent at the surface! This happens because light from the pencil in water bends as it enters air, making the submerged part appear at a different angle.</p>
+            </div>
+            <div class="highlight-box">
+                <h4 class="text-xl font-semibold mb-2">Uses of Refraction</h4>
+                <ul class="list-disc ml-6">
+                    <li>Optical fibers (using TIR) for high-speed internet.</li>
+                    <li>Prisms to split white light into a spectrum (rainbow).</li>
+                    <li>Camera lenses to focus light and capture images.</li>
+                </ul>
+            </div>
+            <div class="canvas-container text-center">
+                <canvas id="refractionCanvas" width="600" height="400" class="mx-auto mb-4"></canvas>
+                <p class="text-center text-gray-600 italic">Move your mouse in the air to place the object and see it bend in water!</p>
+            </div>
+            <div class="did-you-know">
+                <h4 class="text-xl font-semibold mb-2">Did You Know?</h4>
+                <p>Rainbows form due to refraction, reflection, and dispersion of sunlight in raindrops! That’s why you see them after rain.</p>
+            </div>
+            <h3 class="text-2xl font-semibold mb-4">Lenses</h3>
+            <p class="text-lg mb-4">Lenses are curved glass pieces that bend light to form images. They’re used in many devices, from glasses to telescopes!</p>
+            <div class="highlight-box">
+                <h4 class="text-xl font-semibold mb-2">Lens Formula</h4>
+                <p>\( \frac{1}{v} - \frac{1}{u} = \frac{1}{f} \), where \( u \) is object distance, \( v \) is image distance, and \( f \) is focal length.</p>
+                <p>Magnification: \( m = \frac{v}{u} \).</p>
+            </div>
+            <h4 class="text-xl font-semibold mb-4">Convex Lens</h4>
+            <p class="text-lg mb-4">Convex lenses are converging lenses, thicker in the middle. They can form real or virtual images depending on the object’s position.</p>
+            <div class="highlight-box">
+                <h4 class="text-xl font-semibold mb-2">Image Formation</h4>
+                <ul class="list-disc ml-6">
+                    <li>Beyond 2F: Real, inverted, smaller.</li>
+                    <li>At 2F: Real, inverted, same size.</li>
+                    <li>Between 2F and F: Real, inverted, larger.</li>
+                    <li>At F: Image at infinity.</li>
+                    <li>Between F and lens: Virtual, upright, larger.</li>
+                </ul>
+            </div>
+            <div class="highlight-box">
+                <h4 class="text-xl font-semibold mb-2">Uses of Convex Lenses</h4>
+                <ul class="list-disc ml-6">
+                    <li>Magnifying glasses (object between F and lens).</li>
+                    <li>Cameras and projectors to focus light.</li>
+                    <li>Correcting farsightedness (hyperopia) in eyeglasses.</li>
+                </ul>
+            </div>
+            <div class="canvas-container text-center">
+                <canvas id="convexLensCanvas" width="600" height="400" class="mx-auto mb-4"></canvas>
+                <p class="text-center text-gray-600 italic">Move your mouse left of the lens to place the object and see its image!</p>
+            </div>
+            <h4 class="text-xl font-semibold mb-4">Concave Lens</h4>
+            <p class="text-lg mb-4">Concave lenses are diverging lenses, thinner in the middle. They always form virtual, upright, and smaller images.</p>
+            <div class="highlight-box">
+                <h4 class="text-xl font-semibold mb-2">Key Points</h4>
+                <ul class="list-disc ml-6">
+                    <li>Always virtual, upright, and diminished images.</li>
+                    <li>Focus (F): Where rays appear to diverge from.</li>
+                </ul>
+            </div>
+            <div class="highlight-box">
+                <h4 class="text-xl font-semibold mb-2">Uses of Concave Lenses</h4>
+                <ul class="list-disc ml-6">
+                    <li>Correcting nearsightedness (myopia) in eyeglasses.</li>
+                    <li>Peepholes in doors (wide field of view).</li>
+                    <li>Combined with convex lenses in telescopes to correct aberrations.</li>
+                </ul>
+            </div>
+            <div class="canvas-container text-center">
+                <canvas id="concaveLensCanvas" width="600" height="400" class="mx-auto mb-4"></canvas>
+                <p class="text-center text-gray-600 italic">Move your mouse left of the lens to place the object and see its virtual image!</p>
+            </div>
+        </section>
+    </main>
+    <script>
+        // Dynamic Colors
+        const colors = ['#4a90e2', '#50e3c2', '#ff6b6b', '#f6e05e'];
+        let colorIndex = 0;
+
+        function updateDynamicColors() {
+            const header = document.getElementById('header');
+            const sections = document.getElementsByClassName('section-bg');
+            const canvases = document.getElementsByTagName('canvas');
+            const navLinks = document.getElementsByClassName('nav-link');
+
+            const currentColor = colors[colorIndex];
+            const nextColor = colors[(colorIndex + 1) % colors.length];
+            header.style.background = `linear-gradient(90deg, ${currentColor}, ${nextColor})`;
+
+            for (let section of sections) {
+                section.style.background = `linear-gradient(145deg, #ffffff, ${nextColor}20)`;
+            }
+
+            for (let canvas of canvases) {
+                canvas.style.borderColor = currentColor;
+            }
+
+            for (let link of navLinks) {
+                link.onmouseover = () => {
+                    link.style.backgroundColor = nextColor;
+                    link.style.color = '#1a202c';
+                };
+                link.onmouseout = () => {
+                    link.style.backgroundColor = '';
+                    link.style.color = '#ffffff';
+                };
+            }
+
+            colorIndex = (colorIndex + 1) % colors.length;
+            setTimeout(updateDynamicColors, 5000);
+        }
+        updateDynamicColors();
+
+        // Scroll Animation for Sections
+        const sections = document.querySelectorAll('.section-bg');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => observer.observe(section));
+
+        // Utility Function to Draw Object
+        function drawObject(ctx, x, y, scale = 1, invert = false, isImage = false) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.scale(scale * (invert ? -1 : 1), scale);
+            ctx.beginPath();
+            ctx.moveTo(0, -20);
+            ctx.lineTo(0, 0);
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(-5, -15);
+            ctx.lineTo(0, -20);
+            ctx.lineTo(5, -15);
+            ctx.fillStyle = isImage ? '#FF0000' : '#008000'; // Red for image, green for object
+            ctx.fill();
+            ctx.restore();
+        }
+
+        // Ray Drawing Utility (No Animation)
+        function drawRay(ctx, startX, startY, endX, endY, isDashed = false) {
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(endX, endY);
+            ctx.strokeStyle = '#000000'; // Black rays
+            ctx.lineWidth = 0.5;
+            if (isDashed) ctx.setLineDash([5, 5]);
+            ctx.stroke();
+            if (isDashed) ctx.setLineDash([]);
+        }
+
+        // Plane Mirror
+        const planeMirrorCanvas = document.getElementById('planeMirrorCanvas');
+        const ctx1 = planeMirrorCanvas.getContext('2d');
+        let objX1 = null;
+
+        function drawPlaneMirror() {
+            ctx1.clearRect(0, 0, 600, 400);
+            ctx1.beginPath();
+            ctx1.moveTo(300, 50);
+            ctx1.lineTo(300, 350);
+            ctx1.strokeStyle = '#000000';
+            ctx1.lineWidth = 3;
+            ctx1.stroke();
+            ctx1.beginPath();
+            ctx1.moveTo(50, 200);
+            ctx1.lineTo(550, 200);
+            ctx1.strokeStyle = '#000000';
+            ctx1.lineWidth = 2;
+            ctx1.stroke();
+            ctx1.fillStyle = '#000000';
+            ctx1.font = '14px Poppins';
+            ctx1.fillText('Mirror', 310, 180);
+            if (objX1) {
+                const objX = objX1;
+                const objY = 180;
+                const imgX = 600 - objX;
+                const imgY = 180;
+                drawObject(ctx1, objX, objY, 1, false, false);
+                drawObject(ctx1, imgX, imgY, 1, true, true);
+                drawRay(ctx1, objX, 180, 300, 180);
+                drawRay(ctx1, 300, 180, imgX, imgY);
+                drawRay(ctx1, objX, 165, 300, 195);
+                drawRay(ctx1, 300, 195, imgX - 5, imgY - 15);
+                ctx1.beginPath();
+                ctx1.moveTo(300, 195);
+                ctx1.lineTo(300, 50);
+                ctx1.strokeStyle = '#000000';
+                ctx1.lineWidth = 1;
+                ctx1.setLineDash([5, 5]);
+                ctx1.stroke();
+                ctx1.setLineDash([]);
+                ctx1.fillText('i', 280, 160);
+                ctx1.fillText('r', 320, 160);
+                ctx1.fillText('Object', objX - 30, objY - 30);
+                ctx1.fillText('Image', imgX - 30, imgY - 30);
+                ctx1.fillText(`u = ${Math.round(300 - objX)}`, objX - 30, objY - 50);
+                ctx1.fillText(`v = ${Math.round(300 - objX)}`, imgX - 30, imgY - 50);
+            }
+        }
+
+        planeMirrorCanvas.addEventListener('mousemove', (e) => {
+            const rect = planeMirrorCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left - window.scrollX;
+            objX1 = (x < 300 && x > 50) ? x : null;
+            drawPlaneMirror();
+        });
+
+        drawPlaneMirror();
+
+        // Concave Mirror
+        const concaveMirrorCanvas = document.getElementById('concaveMirrorCanvas');
+        const ctx2 = concaveMirrorCanvas.getContext('2d');
+        let objX2 = null;
+
+        function drawConcaveMirror() {
+            ctx2.clearRect(0, 0, 600, 400);
+            ctx2.beginPath();
+            ctx2.arc(200, 200, 30, Math.PI * 0.75, Math.PI * 1.25, true);
+            ctx2.strokeStyle = '#000000';
+            ctx2.lineWidth = 3;
+            ctx2.stroke();
+            ctx2.beginPath();
+            ctx2.moveTo(50, 200);
+            ctx2.lineTo(550, 200);
+            ctx2.strokeStyle = '#000000';
+            ctx2.lineWidth = 2;
+            ctx2.stroke();
+            ctx2.fillStyle = '#000000';
+            ctx2.font = '14px Poppins';
+            ctx2.beginPath();
+            ctx2.arc(150, 200, 2, 0, Math.PI * 2);
+            ctx2.fill();
+            ctx2.fillText('F', 145, 215);
+            ctx2.beginPath();
+            ctx2.arc(200, 200, 2, 0, Math.PI * 2);
+            ctx2.fill();
+            ctx2.fillText('P', 195, 215);
+            ctx2.beginPath();
+            ctx2.arc(100, 200, 2, 0, Math.PI * 2);
+            ctx2.fill();
+            ctx2.fillText('C', 95, 215);
+            ctx2.fillText('f = 50', 150, 235);
+            if (objX2) {
+                const objX = objX2;
+                let imgX, imgY, imgScale, isVirtual = false;
+                const u = 200 - objX;
+                const f = 50;
+                if (u <= 0 || u === f) {
+                    imgX = 400;
+                    imgY = 180;
+                    imgScale = 1;
+                    drawObject(ctx2, objX, 180, 1, false, false);
+                    drawRay(ctx2, objX, 180, 200, 180);
+                    drawRay(ctx2, 200, 180, imgX, imgY);
+                    drawRay(ctx2, objX, 180, 100, 180);
+                    drawRay(ctx2, 100, 180, imgX, imgY);
+                    ctx2.fillText('Image at infinity', 350, 160);
+                    ctx2.fillText('Object', objX - 30, 150);
+                    ctx2.fillText(`u = ${Math.round(u)}`, objX - 30, 130);
+                    return;
+                }
+                const v = (u * f) / (u - f);
+                imgX = 200 + v;
+                const magnification = -v / u;
+                imgScale = Math.abs(magnification);
+                imgY = 180 - (180 - 200) * magnification;
+                isVirtual = v < 0;
+                drawObject(ctx2, objX, 180, 1, false, false);
+                if (isVirtual) {
+                    drawObject(ctx2, imgX, imgY, imgScale, true, true);
+                    drawRay(ctx2, objX, 180, 200, 180);
+                    drawRay(ctx2, 200, 180, 150, 200, true);
+                    drawRay(ctx2, objX, 180, 200, 180);
+                    drawRay(ctx2, 200, 180, imgX, imgY, true);
+                } else {
+                    drawObject(ctx2, imgX, imgY, imgScale, false, true);
+                    drawRay(ctx2, objX, 180, 200, 180);
+                    drawRay(ctx2, 200, 180, imgX, imgY);
+                    drawRay(ctx2, objX, 180, 100, 180);
+                    drawRay(ctx2, 100, 180, imgX, imgY);
+                }
+                ctx2.fillText('Object', objX - 30, 150);
+                ctx2.fillText('Image', imgX - 30, imgY + (isVirtual ? -30 : 50));
+                ctx2.fillText(`u = ${Math.round(u)}`, objX - 30, 130);
+                ctx2.fillText(`v = ${Math.round(v)}`, imgX - 30, imgY + (isVirtual ? -50 : 70));
+                ctx2.fillText(`m = ${magnification.toFixed(1)}`, imgX - 30, imgY + (isVirtual ? -70 : 90));
+            }
+        }
+
+        concaveMirrorCanvas.addEventListener('mousemove', (e) => {
+            const rect = concaveMirrorCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left - window.scrollX;
+            objX2 = (x < 200 && x > 50) ? x : null;
+            drawConcaveMirror();
+        });
+
+        drawConcaveMirror();
+
+        // Convex Mirror
+        const convexMirrorCanvas = document.getElementById('convexMirrorCanvas');
+        const ctx3 = convexMirrorCanvas.getContext('2d');
+        let objX3 = null;
+
+        function drawConvexMirror() {
+            ctx3.clearRect(0, 0, 600, 400);
+            ctx3.beginPath();
+            ctx3.arc(200, 200, 30, Math.PI * 0.75, Math.PI * 1.25);
+            ctx3.strokeStyle = '#000000';
+            ctx3.lineWidth = 3;
+            ctx3.stroke();
+            ctx3.beginPath();
+            ctx3.moveTo(50, 200);
+            ctx3.lineTo(550, 200);
+            ctx3.strokeStyle = '#000000';
+            ctx3.lineWidth = 2;
+            ctx3.stroke();
+            ctx3.fillStyle = '#000000';
+            ctx3.font = '14px Poppins';
+            ctx3.beginPath();
+            ctx3.arc(250, 200, 2, 0, Math.PI * 2);
+            ctx3.fill();
+            ctx3.fillText('F', 255, 215);
+            ctx3.beginPath();
+            ctx3.arc(200, 200, 2, 0, Math.PI * 2);
+            ctx3.fill();
+            ctx3.fillText('P', 195, 215);
+            ctx3.beginPath();
+            ctx3.arc(300, 200, 2, 0, Math.PI * 2);
+            ctx3.fill();
+            ctx3.fillText('C', 305, 215);
+            ctx3.fillText('f = 50', 250, 235);
+            if (objX3) {
+                const objX = objX3;
+                const u = 200 - objX;
+                const f = -50;
+                const v = (u * f) / (u - f);
+                const imgX = 200 + v;
+                const magnification = -v / u;
+                const imgScale = Math.abs(magnification);
+                const imgY = 180 - (180 - 200) * magnification;
+                drawObject(ctx3, objX, 180, 1, false, false);
+                drawObject(ctx3, imgX, imgY, imgScale, false, true);
+                drawRay(ctx3, objX, 180, 200, 180);
+                drawRay(ctx3, 200, 180, 250, 200, true);
+                drawRay(ctx3, 200, 180, imgX, imgY, true);
+                drawRay(ctx3, objX, 180, 200, 180);
+                drawRay(ctx3, 200, 180, 300, 200, true);
+                ctx3.fillText('Object', objX - 30, 150);
+                ctx3.fillText('Image', imgX - 30, imgY - 30);
+                ctx3.fillText(`u = ${Math.round(u)}`, objX - 30, 130);
+                ctx3.fillText(`v = ${Math.round(v)}`, imgX - 30, imgY - 50);
+                ctx3.fillText(`m = ${magnification.toFixed(1)}`, imgX - 30, imgY - 70);
+            }
+        }
+
+        convexMirrorCanvas.addEventListener('mousemove', (e) => {
+            const rect = convexMirrorCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left - window.scrollX;
+            objX3 = (x < 150 && x > 50) ? x : null;
+            drawConvexMirror();
+        });
+
+        drawConvexMirror();
+
+        // Refraction
+        const refractionCanvas = document.getElementById('refractionCanvas');
+        const ctx4 = refractionCanvas.getContext('2d');
+        let objX4 = null;
+
+        function drawRefraction() {
+            ctx4.clearRect(0, 0, 600, 400);
+            ctx4.beginPath();
+            ctx4.moveTo(50, 200);
+            ctx4.lineTo(550, 200);
+            ctx4.strokeStyle = '#000000';
+            ctx4.lineWidth = 2;
+            ctx4.stroke();
+            ctx4.fillStyle = '#000000';
+            ctx4.font = '14px Poppins';
+            ctx4.fillText('Air (n = 1)', 50, 100);
+            ctx4.fillText('Water (n = 1.33)', 50, 300);
+            if (objX4) {
+                const objX = objX4;
+                const objY = 180;
+                drawObject(ctx4, objX, objY, 1, false, false);
+                drawRay(ctx4, objX, 180, 300, 200);
+                const angleIncidence = Math.atan2(200 - 180, 300 - objX);
+                const n1 = 1, n2 = 1.33;
+                let angleRefraction = Math.asin((n1 / n2) * Math.sin(angleIncidence));
+                if (isNaN(angleRefraction)) angleRefraction = Math.PI / 2;
+                drawRay(ctx4, 300, 200, 300 - 150 * Math.cos(angleRefraction), 200 + 150 * Math.sin(angleRefraction));
+                ctx4.beginPath();
+                ctx4.moveTo(300, 50);
+                ctx4.lineTo(300, 350);
+                ctx4.setLineDash([5, 5]);
+                ctx4.strokeStyle = '#000000';
+                ctx4.stroke();
+                ctx4.setLineDash([]);
+                ctx4.fillText('i', 280, 190);
+                ctx4.fillText('r', 320, 220);
+                ctx4.fillText('Object', objX - 30, 150);
+                ctx4.fillText(`i = ${(angleIncidence * 180 / Math.PI).toFixed(1)}°`, 250, 170);
+                ctx4.fillText(`r = ${(angleRefraction * 180 / Math.PI).toFixed(1)}°`, 320, 240);
+            }
+        }
+
+        refractionCanvas.addEventListener('mousemove', (e) => {
+            const rect = refractionCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left - window.scrollX;
+            objX4 = (x < 250 && x > 50) ? x : null;
+            drawRefraction();
+        });
+
+        drawRefraction();
+
+        // Convex Lens
+        const convexLensCanvas = document.getElementById('convexLensCanvas');
+        const ctx5 = convexLensCanvas.getContext('2d');
+        let objX5 = null;
+
+        function drawConvexLens() {
+            ctx5.clearRect(0, 0, 600, 400);
+            ctx5.beginPath();
+            ctx5.moveTo(300, 50);
+            ctx5.lineTo(300, 350);
+            ctx5.strokeStyle = '#000000';
+            ctx5.lineWidth = 1;
+            ctx5.stroke();
+            ctx5.beginPath();
+            ctx5.moveTo(300, 170);
+            ctx5.lineTo(290, 190);
+            ctx5.lineTo(310, 190);
+            ctx5.lineTo(300, 210);
+            ctx5.fillStyle = '#000000';
+            ctx5.fill();
+            ctx5.beginPath();
+            ctx5.moveTo(50, 200);
+            ctx5.lineTo(550, 200);
+            ctx5.strokeStyle = '#000000';
+            ctx5.lineWidth = 2;
+            ctx5.stroke();
+            ctx5.fillStyle = '#000000';
+            ctx5.font = '14px Poppins';
+            ctx5.beginPath();
+            ctx5.arc(150, 200, 2, 0, Math.PI * 2);
+            ctx5.fill();
+            ctx5.fillText('F', 145, 215);
+            ctx5.beginPath();
+            ctx5.arc(300, 200, 2, 0, Math.PI * 2);
+            ctx5.fill();
+            ctx5.fillText('O', 295, 215);
+            ctx5.beginPath();
+            ctx5.arc(450, 200, 2, 0, Math.PI * 2);
+            ctx5.fill();
+            ctx5.fillText('F', 445, 215);
+            ctx5.fillText('f = 150', 150, 235);
+            if (objX5) {
+                const objX = objX5;
+                const u = 300 - objX;
+                const f = 150;
+                if (u === f) {
+                    drawObject(ctx5, objX, 180, 1, false, false);
+                    drawRay(ctx5, objX, 180, 300, 180);
+                    drawRay(ctx5, 300, 180, 500, 180);
+                    drawRay(ctx5, objX, 180, 300, 200);
+                    drawRay(ctx5, 300, 200, 500, 180);
+                    ctx5.fillText('Image at infinity', 450, 160);
+                    ctx5.fillText('Object', objX - 30, 150);
+                    ctx5.fillText(`u = ${Math.round(u)}`, objX - 30, 130);
+                    return;
+                }
+                const v = (u * f) / (u - f);
+                const imgX = 300 + v;
+                const magnification = v / u;
+                const imgScale = Math.abs(magnification);
+                const imgY = 180 - (180 - 200) * magnification;
+                const isVirtual = v < 0;
+                drawObject(ctx5, objX, 180, 1, false, false);
+                if (isVirtual) {
+                    drawObject(ctx5, imgX, imgY, imgScale, true, true);
+                    drawRay(ctx5, objX, 180, 300, 180);
+                    drawRay(ctx5, 300, 180, 150, 200, true);
+                    drawRay(ctx5, objX, 180, 300, 200);
+                    drawRay(ctx5, 300, 200, imgX, imgY, true);
+                } else {
+                    drawObject(ctx5, imgX, imgY, imgScale, false, true);
+                    drawRay(ctx5, objX, 180, 300, 180);
+                    drawRay(ctx5, 300, 180, imgX, imgY);
+                    drawRay(ctx5, objX, 180, 300, 200);
+                    drawRay(ctx5, 300, 200, imgX, imgY);
+                }
+                ctx5.fillText('Object', objX - 30, 150);
+                ctx5.fillText('Image', imgX - 30, imgY + (isVirtual ? -30 : 50));
+                ctx5.fillText(`u = ${Math.round(u)}`, objX - 30, 130);
+                ctx5.fillText(`v = ${Math.round(v)}`, imgX - 30, imgY + (isVirtual ? -50 : 70));
+                ctx5.fillText(`m = ${magnification.toFixed(1)}`, imgX - 30, imgY + (isVirtual ? -70 : 90));
+            }
+        }
+
+        convexLensCanvas.addEventListener('mousemove', (e) => {
+            const rect = convexLensCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left - window.scrollX;
+            objX5 = (x < 300 && x > 50) ? x : null;
+            drawConvexLens();
+        });
+
+        drawConvexLens();
+
+        // Concave Lens
+        const concaveLensCanvas = document.getElementById('concaveLensCanvas');
+        const ctx6 = concaveLensCanvas.getContext('2d');
+        let objX6 = null;
+
+        function drawConcaveLens() {
+            ctx6.clearRect(0, 0, 600, 400);
+            ctx6.beginPath();
+            ctx6.moveTo(300, 50);
+            ctx6.lineTo(300, 350);
+            ctx6.strokeStyle = '#000000';
+            ctx6.lineWidth = 1;
+            ctx6.stroke();
+            ctx6.beginPath();
+            ctx6.moveTo(300, 170);
+            ctx6.lineTo(310, 190);
+            ctx6.lineTo(290, 190);
+            ctx6.lineTo(300, 210);
+            ctx6.fillStyle = '#000000';
+            ctx6.fill();
+            ctx6.beginPath();
+            ctx6.moveTo(50, 200);
+            ctx6.lineTo(550, 200);
+            ctx6.strokeStyle = '#000000';
+            ctx6.lineWidth = 2;
+            ctx6.stroke();
+            ctx6.fillStyle = '#000000';
+            ctx6.font = '14px Poppins';
+            ctx6.beginPath();
+            ctx6.arc(150, 200, 2, 0, Math.PI * 2);
+            ctx6.fill();
+            ctx6.fillText('F', 145, 215);
+            ctx6.beginPath();
+            ctx6.arc(300, 200, 2, 0, Math.PI * 2);
+            ctx6.fill();
+            ctx6.fillText('O', 295, 215);
+            ctx6.beginPath();
+            ctx6.arc(450, 200, 2, 0, Math.PI * 2);
+            ctx6.fill();
+            ctx6.fillText('F', 445, 215);
+            ctx6.fillText('f = 150', 150, 235);
+            if (objX6) {
+                const objX = objX6;
+                const focalLength = -150;
+                const u = 300 - objX;
+                const v = (u * focalLength) / (u - focalLength);
+                const imgX = 300 - v;
+                const magnification = v / u;
+                const imgScale = Math.abs(magnification);
+                const imgY = 180 - (180 - 200) * magnification;
+                drawObject(ctx6, objX, 180, 1, false, false);
+                drawObject(ctx6, imgX, imgY, imgScale, false, true);
+                drawRay(ctx6, objX, 180, 300, 180);
+                drawRay(ctx6, 300, 180, 150, 200, true);
+                drawRay(ctx6, 300, 180, imgX, imgY, true);
+                drawRay(ctx6, objX, 180, 300, 200);
+                drawRay(ctx6, 300, 200, imgX, imgY);
+                ctx6.fillText('Object', objX - 30, 150);
+                ctx6.fillText('Image', imgX - 30, imgY - 30);
+                ctx6.fillText(`u = ${Math.round(u)}`, objX - 30, 130);
+                ctx6.fillText(`v = ${Math.round(v)}`, imgX - 30, imgY - 50);
+                ctx6.fillText(`m = ${magnification.toFixed(1)}`, imgX - 30, imgY - 70);
+            }
+        }
+
+        concaveLensCanvas.addEventListener('mousemove', (e) => {
+            const rect = concaveLensCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left - window.scrollX;
+            objX6 = (x < 250 && x > 50) ? x : null;
+            drawConcaveLens();
+        });
+
+        drawConcaveLens();
+    </script>
+</body>
+</html>
